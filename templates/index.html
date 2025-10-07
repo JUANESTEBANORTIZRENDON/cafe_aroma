@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Aroma - El mejor café de la ciudad</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>☕ Café Aroma</h1>
+            <p class="subtitle">El mejor café de la ciudad</p>
+        </header>
+
+        <main>
+            <section class="hero">
+                <h2>¡Bienvenido a nuestra cafetería!</h2>
+                <p>Descubre los sabores más exquisitos en cada taza. Desde granos seleccionados hasta preparaciones artesanales.</p>
+            </section>
+
+            <!-- Mostrar mensajes flash -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="messages">
+                        {% for category, message in messages %}
+                            <div class="message {{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <section class="newsletter">
+                <h3>📧 Únete a nuestra comunidad</h3>
+                <p>Recibe noticias, promociones especiales y tips sobre café directamente en tu email.</p>
+                
+                <!-- Formulario que envía POST a /send -->
+                <form action="/send" method="POST" class="email-form">
+                    <div class="form-group">
+                        <label for="email">Tu dirección de email:</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            placeholder="ejemplo@correo.com"
+                            required
+                            class="email-input"
+                        >
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        ✉️ Enviar
+                    </button>
+                </form>
+            </section>
+
+            <section class="features">
+                <h3>¿Por qué elegir Café Aroma?</h3>
+                <div class="features-grid">
+                    <div class="feature">
+                        <h4>🌱 Granos Premium</h4>
+                        <p>Seleccionamos los mejores granos de café de origen sostenible.</p>
+                    </div>
+                    <div class="feature">
+                        <h4>👨‍🍳 Baristas Expertos</h4>
+                        <p>Nuestro equipo está capacitado en las mejores técnicas de preparación.</p>
+                    </div>
+                    <div class="feature">
+                        <h4>🏠 Ambiente Acogedor</h4>
+                        <p>Un espacio perfecto para relajarte, trabajar o compartir con amigos.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Café Aroma. Todos los derechos reservados.</p>
+            <p>Hecho con ❤️ y mucho ☕</p>
+        </footer>
+    </div>
+</body>
+</html>
