@@ -5,14 +5,8 @@ services:
     build: .
     ports:
       - "5000:5000"
-    environment:
-      # Variables de entorno para SMTP
-      - SMTP_HOST=${SMTP_HOST:-smtp.gmail.com}
-      - SMTP_PORT=${SMTP_PORT:-465}
-      - SMTP_USER=${SMTP_USER}
-      - SMTP_PASS=${SMTP_PASS}
-      - SMTP_FROM=${SMTP_FROM}
-      - SECRET_KEY=${SECRET_KEY:-dev-key-change-in-production}
+    env_file:
+      - .env
     volumes:
       # Montar el código para desarrollo (opcional)
       - .:/app

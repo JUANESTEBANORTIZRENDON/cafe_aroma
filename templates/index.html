@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Café Aroma - El mejor café de la ciudad</title>
+    <title>Café Aroma - Experiencia Artesanal de Café</title>
+    <meta name="description" content="Descubre la experiencia más auténtica del café artesanal en Café Aroma. Granos premium, baristas expertos y ambiente hipster único.">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>☕ Café Aroma</h1>
-            <p class="subtitle">El mejor café de la ciudad</p>
+            <h1>Café Aroma</h1>
+            <p class="subtitle">Experiencia Artesanal de Café</p>
         </header>
 
         <main>
             <section class="hero">
-                <h2>¡Bienvenido a nuestra cafetería!</h2>
-                <p>Descubre los sabores más exquisitos en cada taza. Desde granos seleccionados hasta preparaciones artesanales.</p>
+                <h2>🌟 Bienvenido a Nuestra Experiencia Única</h2>
+                <p>Sumérgete en el mundo del café artesanal donde cada taza cuenta una historia. Desde granos seleccionados de origen único hasta técnicas de preparación que despiertan todos tus sentidos.</p>
             </section>
 
             <!-- Mostrar mensajes flash -->
@@ -33,42 +36,43 @@
             {% endwith %}
 
             <section class="newsletter">
-                <h3>📧 Únete a nuestra comunidad</h3>
-                <p>Recibe noticias, promociones especiales y tips sobre café directamente en tu email.</p>
+                <h3>☕ Únete a Nuestra Comunidad Cafetera</h3>
+                <p>Sé parte de una experiencia exclusiva. Recibe secretos de baristas, ofertas especiales y las últimas tendencias del mundo del café artesanal.</p>
                 
                 <!-- Formulario que envía POST a /send -->
-                <form action="/send" method="POST" class="email-form">
+                <form action="/send" method="POST" class="email-form" id="newsletterForm">
                     <div class="form-group">
                         <label for="email">Tu dirección de email:</label>
                         <input 
                             type="email" 
                             id="email" 
                             name="email" 
-                            placeholder="ejemplo@correo.com"
+                            placeholder="tu-email@ejemplo.com"
                             required
                             class="email-input"
+                            autocomplete="email"
                         >
                     </div>
-                    <button type="submit" class="submit-btn">
-                        ✉️ Enviar
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span>🚀 Comenzar Mi Experiencia</span>
                     </button>
                 </form>
             </section>
 
             <section class="features">
-                <h3>¿Por qué elegir Café Aroma?</h3>
+                <h3>La Diferencia Café Aroma</h3>
                 <div class="features-grid">
                     <div class="feature">
-                        <h4>🌱 Granos Premium</h4>
-                        <p>Seleccionamos los mejores granos de café de origen sostenible.</p>
+                        <h4>🌱 Origen Sostenible</h4>
+                        <p>Trabajamos directamente con productores locales para garantizar granos de la más alta calidad y prácticas éticas que respetan el medio ambiente.</p>
                     </div>
                     <div class="feature">
-                        <h4>👨‍🍳 Baristas Expertos</h4>
-                        <p>Nuestro equipo está capacitado en las mejores técnicas de preparación.</p>
+                        <h4>👨‍🍳 Maestros del Café</h4>
+                        <p>Nuestros baristas son artistas certificados que dominan desde el espresso perfecto hasta las técnicas más innovadoras de preparación.</p>
                     </div>
                     <div class="feature">
-                        <h4>🏠 Ambiente Acogedor</h4>
-                        <p>Un espacio perfecto para relajarte, trabajar o compartir con amigos.</p>
+                        <h4>🎨 Espacio Hipster</h4>
+                        <p>Un ambiente único que combina diseño industrial con toques vintage, creando el lugar perfecto para inspirarte y conectar.</p>
                     </div>
                 </div>
             </section>
@@ -76,8 +80,216 @@
 
         <footer>
             <p>&copy; 2024 Café Aroma. Todos los derechos reservados.</p>
-            <p>Hecho con ❤️ y mucho ☕</p>
+            <p>Hecho con ❤️ y mucho ☕ por artesanos del código</p>
         </footer>
     </div>
+
+    <script>
+        // SUPER DYNAMIC & YOUTHFUL INTERACTIONS
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('newsletterForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const emailInput = document.getElementById('email');
+            
+            // Create floating emojis
+            function createFloatingEmoji() {
+                const emojis = ['☕', '✨', '🚀', '💫', '🌟', '🎉', '💖', '🔥'];
+                const emoji = document.createElement('div');
+                emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.style.cssText = `
+                    position: fixed;
+                    font-size: ${Math.random() * 20 + 15}px;
+                    left: ${Math.random() * 100}vw;
+                    top: 100vh;
+                    pointer-events: none;
+                    z-index: 1000;
+                    animation: floatUp ${Math.random() * 3 + 4}s ease-out forwards;
+                `;
+                document.body.appendChild(emoji);
+                setTimeout(() => emoji.remove(), 7000);
+            }
+            
+            // Add floating emoji animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes floatUp {
+                    0% { 
+                        transform: translateY(0) rotate(0deg) scale(0.5);
+                        opacity: 0;
+                    }
+                    10% {
+                        opacity: 1;
+                        transform: translateY(-20px) rotate(10deg) scale(1);
+                    }
+                    90% {
+                        opacity: 1;
+                        transform: translateY(-100vh) rotate(360deg) scale(1.2);
+                    }
+                    100% {
+                        opacity: 0;
+                        transform: translateY(-110vh) rotate(380deg) scale(0.8);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Random floating emojis
+            setInterval(createFloatingEmoji, 3000);
+            
+            // Super dynamic button animation
+            form.addEventListener('submit', function(e) {
+                submitBtn.innerHTML = '<span>🚀 ¡Despegando!</span>';
+                submitBtn.disabled = true;
+                submitBtn.style.animation = 'rocketLaunch 0.8s ease-in-out infinite';
+                
+                // Create explosion of emojis
+                for(let i = 0; i < 10; i++) {
+                    setTimeout(() => createFloatingEmoji(), i * 100);
+                }
+                
+                setTimeout(() => {
+                    submitBtn.innerHTML = '<span>✨ ¡Enviando Magia!</span>';
+                }, 1000);
+            });
+            
+            // Enhanced real-time validation with effects
+            emailInput.addEventListener('input', function() {
+                const email = this.value;
+                const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+                
+                if (email.length > 0) {
+                    if (isValid) {
+                        this.style.borderColor = '#4CAF50';
+                        this.style.boxShadow = '0 0 20px rgba(76, 175, 80, 0.4)';
+                        this.style.transform = 'scale(1.02)';
+                        // Success emoji
+                        if (!this.nextElementSibling || !this.nextElementSibling.classList.contains('validation-emoji')) {
+                            const emoji = document.createElement('span');
+                            emoji.textContent = '✅';
+                            emoji.className = 'validation-emoji';
+                            emoji.style.cssText = 'position: absolute; right: 15px; top: 50%; transform: translateY(-50%); animation: bounce 0.5s ease-in-out;';
+                            this.parentElement.style.position = 'relative';
+                            this.parentElement.appendChild(emoji);
+                        }
+                    } else {
+                        this.style.borderColor = '#ff6b35';
+                        this.style.boxShadow = '0 0 20px rgba(255, 107, 53, 0.4)';
+                        this.style.transform = 'scale(1) translateX(5px)';
+                        // Remove success emoji
+                        const existingEmoji = this.parentElement.querySelector('.validation-emoji');
+                        if (existingEmoji) existingEmoji.remove();
+                    }
+                } else {
+                    this.style.borderColor = 'var(--accent-color)';
+                    this.style.boxShadow = '0 5px 15px rgba(44, 24, 16, 0.1)';
+                    this.style.transform = 'scale(1)';
+                    const existingEmoji = this.parentElement.querySelector('.validation-emoji');
+                    if (existingEmoji) existingEmoji.remove();
+                }
+            });
+            
+            // Mouse trail effect
+            let mouseTrail = [];
+            document.addEventListener('mousemove', function(e) {
+                mouseTrail.push({x: e.clientX, y: e.clientY, time: Date.now()});
+                
+                if (mouseTrail.length > 20) mouseTrail.shift();
+                
+                // Create trail particle
+                if (Math.random() > 0.8) {
+                    const particle = document.createElement('div');
+                    particle.style.cssText = `
+                        position: fixed;
+                        width: 4px;
+                        height: 4px;
+                        background: radial-gradient(circle, #ff6b35, transparent);
+                        border-radius: 50%;
+                        left: ${e.clientX}px;
+                        top: ${e.clientY}px;
+                        pointer-events: none;
+                        z-index: 999;
+                        animation: fadeOut 1s ease-out forwards;
+                    `;
+                    document.body.appendChild(particle);
+                    setTimeout(() => particle.remove(), 1000);
+                }
+            });
+            
+            // Add fadeOut animation for particles
+            if (!document.querySelector('#particle-style')) {
+                const particleStyle = document.createElement('style');
+                particleStyle.id = 'particle-style';
+                particleStyle.textContent = `
+                    @keyframes fadeOut {
+                        0% { opacity: 1; transform: scale(1); }
+                        100% { opacity: 0; transform: scale(0.5); }
+                    }
+                `;
+                document.head.appendChild(particleStyle);
+            }
+            
+            // Enhanced parallax with multiple layers
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const hero = document.querySelector('.hero');
+                const features = document.querySelector('.features');
+                
+                if (hero) {
+                    hero.style.transform = `translateY(${scrolled * 0.3}px) rotate(${scrolled * 0.01}deg)`;
+                }
+                if (features) {
+                    features.style.transform = `translateY(${scrolled * -0.1}px)`;
+                }
+            });
+            
+            // Intersection Observer with staggered animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0) scale(1) rotate(0deg)';
+                            entry.target.style.filter = 'blur(0px)';
+                        }, index * 200);
+                    }
+                });
+            }, observerOptions);
+            
+            // Enhanced feature animations
+            document.querySelectorAll('.feature').forEach((feature, index) => {
+                feature.style.opacity = '0';
+                feature.style.transform = 'translateY(50px) scale(0.9) rotate(5deg)';
+                feature.style.filter = 'blur(5px)';
+                feature.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                observer.observe(feature);
+                
+                // Add hover sound effect (visual feedback)
+                feature.addEventListener('mouseenter', function() {
+                    this.style.animation = 'featureExcited 0.6s ease-in-out';
+                    createFloatingEmoji();
+                });
+                
+                feature.addEventListener('mouseleave', function() {
+                    this.style.animation = '';
+                });
+            });
+            
+            // Add feature excited animation
+            const featureStyle = document.createElement('style');
+            featureStyle.textContent = `
+                @keyframes featureExcited {
+                    0%, 100% { transform: translateY(-8px) scale(1.02) rotate(0deg); }
+                    25% { transform: translateY(-12px) scale(1.05) rotate(2deg); }
+                    75% { transform: translateY(-6px) scale(1.01) rotate(-1deg); }
+                }
+            `;
+            document.head.appendChild(featureStyle);
+        });
+    </script>
 </body>
 </html>
