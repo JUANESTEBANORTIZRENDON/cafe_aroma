@@ -5,6 +5,7 @@
  * 
  * Este pipeline implementa un flujo completo de CI/CD para la aplicación
  * Flask Café Aroma, incluyendo:
+ * - Checkout del código desde Git
  * - Empaquetado ZIP y publicación en Artifactory OSS (generic-local)
  * - Build de imagen Docker local (Artifactory OSS no soporta Docker registry)
  * - Deploy local con credenciales SMTP desde Jenkins Credentials
@@ -15,6 +16,7 @@
  *    - smtp-gmail: Credenciales de Gmail (usuario + App Password)
  *    - artifactory-creds: Credenciales de Artifactory (admin/password)
  * 3. Repositorio en Artifactory: generic-local
+ * 4. Repositorio Git configurado en el job de Jenkins
  * 
  * RAMA PRINCIPAL: master
  * ============================================================================
@@ -57,6 +59,17 @@ pipeline {
     }
     
     stages {
+        // ========================================================================
+        // STAGE 0: Checkout del Código
+        // ========================================================================
+        // Clona el repositorio Git en el workspace de Jenkins
+        stage('Checkout') {
+            steps {
+                echo '📥 Obteniendo código desde Git...'
+                checkout scm
+            }
+        }
+        
         // ========================================================================
         // STAGE 1: Preparar Workspace
         // ========================================================================
@@ -376,6 +389,7 @@ pipeline {
         
         success {
             echo '✅ ¡Pipeline ejecutado exitosamente!'
+            echo '🔄 Stages completados: Checkout → Package → Upload → Build → Deploy → Health Check'
             echo "📦 Artefacto ZIP: ${ARTIFACT_NAME}"
             echo "🐳 Imagen Docker: ${IMG_NAME}:${VERSION}"
             echo "🌐 Aplicación disponible en: http://localhost:5000"
