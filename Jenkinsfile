@@ -171,11 +171,13 @@ pipeline {
                 echo '⬆️  Subiendo ZIP a Artifactory...'
                 script {
                     // Usar credenciales de Artifactory desde Jenkins
-                    withCredentials([usernamePassword(
-                        credentialsId: 'artifactory-creds',
-                        usernameVariable: 'ART_USER',
-                        passwordVariable: 'ART_PASS'
-                    )]) {
+                    // Hacer este stage opcional - no falla el pipeline si hay error
+                    try {
+                        withCredentials([usernamePassword(
+                            credentialsId: 'artifactory-creds',
+                            usernameVariable: 'ART_USER',
+                            passwordVariable: 'ART_PASS'
+                        )]) {
                         if (isUnix()) {
                             sh '''
                                 # Subir artefacto usando curl
@@ -202,6 +204,10 @@ pipeline {
                                 curl -u %ART_USER%:%ART_PASS% -I "%ART_URL%/%ART_GEN%/cafe-aroma/%ARTIFACT_NAME%"
                             '''
                         }
+                    }
+                    } catch (Exception e) {
+                        echo "⚠️  Error al subir a Artifactory: ${e.message}"
+                        echo "⏭️  Continuando con el pipeline..."
                     }
                 }
             }
@@ -339,15 +345,19 @@ pipeline {
                         sh '''
                             # Intentar acceder a la aplicación
                             echo "Verificando endpoint principal..."
-                            for i in {1..5}; do
-                                if curl -f http://localhost:5000 -o /dev/null -s -w "%{http_code}\\n"; then
-                                    echo "✅ Aplicación responde correctamente"
+                            count=1
+                            max_attempts=5
+                            while [ $count -le $max_attempts ]; do
+                                http_code=$(curl -f http://localhost:5000 -o /dev/null -s -w "%{http_code}" || echo "000")
+                                if [ "$http_code" = "200" ]; then
+                                    echo "✅ Aplicación responde correctamente (HTTP $http_code)"
                                     exit 0
                                 fi
-                                echo "Intento $i/5 - esperando..."
+                                echo "Intento $count/$max_attempts - HTTP $http_code - esperando..."
                                 sleep 5
+                                count=$((count + 1))
                             done
-                            echo "❌ La aplicación no responde"
+                            echo "❌ La aplicación no responde después de $max_attempts intentos"
                             exit 1
                         '''
                     } else {
