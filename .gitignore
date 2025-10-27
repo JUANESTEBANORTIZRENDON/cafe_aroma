@@ -108,3 +108,21 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Docker volumes and data
+docker-volumes/
+artifactory-data/
+postgres-data/
+
+# Artifactory specific
+artifactory/
+jfrog/
+
+# Jenkins
+.jenkins/
+jenkins_home/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak

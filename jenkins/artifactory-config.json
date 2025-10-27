@@ -1,0 +1,63 @@
+{
+  "artifactory": {
+    "url": "http://localhost:8082/artifactory",
+    "username": "admin",
+    "description": "Configuración de Artifactory para Jenkins",
+    "repositories": {
+      "docker": {
+        "local": "cafe-aroma-docker-local",
+        "remote": "cafe-aroma-docker-remote",
+        "virtual": "cafe-aroma-docker"
+      },
+      "generic": {
+        "local": "cafe-aroma-generic-local",
+        "remote": "cafe-aroma-generic-remote",
+        "virtual": "cafe-aroma-generic"
+      },
+      "pypi": {
+        "local": "cafe-aroma-pypi-local",
+        "remote": "cafe-aroma-pypi-remote",
+        "virtual": "cafe-aroma-pypi"
+      }
+    },
+    "build_info": {
+      "retention": {
+        "count": 10,
+        "days": 30
+      }
+    }
+  },
+  "jenkins": {
+    "plugins_required": [
+      "artifactory",
+      "docker-pipeline",
+      "pipeline-stage-view",
+      "build-timeout",
+      "timestamper"
+    ],
+    "global_tools": {
+      "python": "Python 3.11",
+      "docker": "Docker",
+      "git": "Default"
+    }
+  },
+  "deployment": {
+    "environments": {
+      "development": {
+        "url": "http://localhost:5000",
+        "auto_deploy": true
+      },
+      "staging": {
+        "url": "http://staging.cafe-aroma.local:5000",
+        "auto_deploy": false,
+        "approval_required": true
+      },
+      "production": {
+        "url": "http://cafe-aroma.com",
+        "auto_deploy": false,
+        "approval_required": true,
+        "backup_required": true
+      }
+    }
+  }
+}

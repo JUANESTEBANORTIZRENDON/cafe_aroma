@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database para Artifactory
+  artifactory-db:
+    image: postgres:13-alpine
+    container_name: artifactory-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: artifactory
+      POSTGRES_USER: artifactory
+      POSTGRES_PASSWORD: Artifactory123
+    volumes:
+      - artifactory-postgres-data:/var/lib/postgresql/data
+    networks:
+      - artifactory-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U artifactory"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # JFrog Artifactory OSS
+  artifactory:
+    image: releases-docker.jfrog.io/jfrog/artifactory-oss:latest
+    container_name: artifactory-oss
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+      - "8082:8082"
+    environment:
+      - JF_SHARED_DATABASE_TYPE=postgresql
+      - JF_SHARED_DATABASE_USERNAME=artifactory
+      - JF_SHARED_DATABASE_PASSWORD=Artifactory123
+      - JF_SHARED_DATABASE_URL=jdbc:postgresql://artifactory-db:5432/artifactory
+      - JF_SHARED_DATABASE_DRIVER=org.postgresql.Driver
+      - JF_SHARED_NODE_ID=art1
+      - JF_SHARED_NODE_NAME=artifactory-primary
+      - JF_SHARED_NODE_HAENABLED=false
+    volumes:
+      - artifactory-data:/opt/jfrog/artifactory/var
+    networks:
+      - artifactory-net
+    depends_on:
+      artifactory-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/artifactory/api/system/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+
+networks:
+  artifactory-net:
+    driver: bridge
+    name: artifactory-network
+
+volumes:
+  artifactory-data:
+    name: artifactory-data
+  artifactory-postgres-data:
+    name: artifactory-postgres-data
