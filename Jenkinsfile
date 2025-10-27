@@ -348,7 +348,8 @@ pipeline {
                             count=1
                             max_attempts=5
                             while [ $count -le $max_attempts ]; do
-                                http_code=$(curl -f http://localhost:5000 -o /dev/null -s -w "%{http_code}" || echo "000")
+                                # Usar host.docker.internal para acceder desde el contenedor Jenkins
+                                http_code=$(curl -o /dev/null -s -w "%{http_code}" http://host.docker.internal:5000 2>/dev/null || echo "000")
                                 if [ "$http_code" = "200" ]; then
                                     echo "✅ Aplicación responde correctamente (HTTP $http_code)"
                                     exit 0
