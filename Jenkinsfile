@@ -214,9 +214,6 @@ pipeline {
         // NOTA: Artifactory OSS no soporta repositorios Docker (solo Pro/Enterprise)
         // La imagen se guarda localmente y se usa en el Stage 5
         stage('Docker Build') {
-            when {
-                branch 'master'
-            }
             steps {
                 echo '🐳 Construyendo imagen Docker localmente...'
                 script {
@@ -255,9 +252,6 @@ pipeline {
         // Despliega el contenedor localmente usando credenciales SMTP de Jenkins
         // NO usa archivo .env, todas las variables vienen de Jenkins Credentials
         stage('Deploy Locally') {
-            when {
-                branch 'master'
-            }
             steps {
                 echo '🚀 Desplegando aplicación localmente...'
                 script {
@@ -338,9 +332,6 @@ pipeline {
         // ========================================================================
         // Verifica que la aplicación esté respondiendo correctamente
         stage('Health Check') {
-            when {
-                branch 'master'
-            }
             steps {
                 echo '🏥 Verificando salud de la aplicación...'
                 script {
